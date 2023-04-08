@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script th:src="@{/jquery.min.js}" ></script>
+    <script>
+        $(function() {
+            // var getIFrameById = function(id){
+            //     var iobj = document.getElementById(id);
+            //     return iobj.contentWindow;
+            // }
+            //
+            // var frmWindow = getIFrameById("frm1");
+            // console.log(frmWindow);
+            let url = "http://localhost:8081/dm/select?source=" + encodeURI("http://localhost:8080");
+            console.log(url);
+            $("#frm1").attr("src", url);
+
+            $("#open_dialog").click(() => {
+                $("#frmDiv").show();
+            });
+
+            window.addEventListener("message", (e) => {
+                $("#open_result").val(e.data.type + e.data.value);
+                $("#frmDiv").hide();
+            });
+
+        });
+    </script>
+</head>
+<body>
+<input id="open_result" />
+<button id="open_dialog">open dialog</button>
+<div id="frmDiv" >
+    <iframe id="frm1" src="" >
+    </iframe>
+</div>
+</body>
+</html>

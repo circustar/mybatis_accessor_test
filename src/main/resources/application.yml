@@ -1,0 +1,90 @@
+#debug: true
+spring:
+  devtools:
+    restart:
+      enabled: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 数据源配置
+      username: test01
+      password: test01
+      url: jdbc:mysql://localhost:3306/test?useSSL=false&allowMultiQueries=true&allowPublicKeyRetrieval=true&useAffectedRows=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 初始化 最小 最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置多个英文逗号分隔
+      filters: stat,wall
+      # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      # 是否启用StatFilter默认值true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        session-stat-enable: false
+        session-stat-max-count: 1000
+        principal-cookie-name: admin
+        principal-session-name: admin
+        profile-enable: true
+      # 根据配置中的url-pattern来访问内置监控页面，如果是上面的配置，内置监控页面的首页是/druid/index.html
+      # http://loacalhsot:8081/druid
+      stat-view-servlet:
+        url-pattern: /druid/*  # 监控页面访问路径
+        # 允许清空统计数据
+        reset-enable: true
+        login-username: admin
+        login-password: 123456
+#      default-auto-commit: false
+#  redis:
+#    # 远程服务器地址
+#    host: localhost
+#    # 远程服务器端口
+#    port: 6379
+#    # 验证码
+#    password:
+#    jedis:
+#      pool:
+#        # 最大空闲连接
+#        max-idle: 8
+#        # 最小空闲链接
+#        min-idle: 0
+#        # 最大连接数（负数表示没有限制）
+#        max-active: 8
+#        # 最大阻塞等待时间（负数表示没有限制）
+#        max-wait: 0
+#    # 链接超时时间（毫秒）
+#    timeout: 300
+#  session:
+#    store-type: redis
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+logging:
+  level:
+    root : info
+    com.test.mybatis_accessor: debug
+server:
+  port: 8088

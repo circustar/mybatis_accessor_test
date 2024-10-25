@@ -2,6 +2,7 @@ package com.test.mybatis_accessor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.circustar.mybatis_accessor.common.MybatisAccessorException;
+import com.circustar.mybatis_accessor.provider.command.IUpdateCommand;
 import com.circustar.mybatis_accessor.support.MybatisAccessorService;
 import com.circustar.mybatis_accessor.support.MybatisAccessorUpdateManager;
 import com.test.mybatis_accessor.dto.ScoreDto;
@@ -46,7 +47,7 @@ public class Test03_UpdateManager {
         List<StudentDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(new StudentDto(), queryWrapper2);
         if(!dtoList.isEmpty()) {
             dtoList.stream().forEach(x ->x.setDeleted(1));
-            updateManager.putDto(dtoList);
+            updateManager.putDto(dtoList, null);
             updateManager.submit();
         }
 
@@ -66,7 +67,7 @@ public class Test03_UpdateManager {
                 .build()).collect(Collectors.toList());
         studentDto.setScoreList(scoreDtoList);
 
-        updateManager.putDto(studentDto);
+        updateManager.putDto(studentDto, null);
         updateManager.submit();
 
         QueryWrapper queryWrapper = new QueryWrapper<>();
@@ -89,7 +90,7 @@ public class Test03_UpdateManager {
         for(StudentCourseDto courseDto : dto.getCourseList()) {
             courseDto.setDeleted(1);
         }
-        updateManager.putDto(dto);
+        updateManager.putDto(dto, null);
         updateManager.submit();
 
         dto = mybatisAccessorService.getDtoById(StudentDto.class, studentDto.getStudentId()

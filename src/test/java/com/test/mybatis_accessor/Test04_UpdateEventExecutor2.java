@@ -206,7 +206,7 @@ public class Test04_UpdateEventExecutor2 {
 
         dto1_1.getPersonInfoList().add(personInfo2_3);
 
-        PersonInfo2 mainPersonInfo = mybatisAccessorService.update(dto1_1, true, null, false, null);
+        PersonInfo2 mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, true, null, false, null);
         assert(mainPersonInfo != null);
 
         dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dto1_1.getPersonId(), true, null);

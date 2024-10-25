@@ -36,6 +36,25 @@ public class Test07_DecodeEventUpdate {
 
     @Test
     public void TestA1() throws MybatisAccessorException {
+
+        ProductDto productDto = mybatisAccessorService.getDtoById(ProductDto.class, 1, false, null);
+        if(productDto == null) {
+            productDto = ProductDto.builder().productId(1).productName("n1").build();
+            mybatisAccessorService.save(productDto,false, null, false, null);
+        }
+
+        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 2, false, null);
+        if(productDto == null) {
+            productDto = ProductDto.builder().productId(2).productName("n2").build();
+            mybatisAccessorService.save(productDto,false, null, false, null);
+        }
+
+        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 3, false, null);
+        if(productDto == null) {
+            productDto = ProductDto.builder().productId(3).productName("n3").build();
+            mybatisAccessorService.save(productDto,false, null, false, null);
+        }
+
         String testName = namePrefix + "A1";
         int createUser = 12345;
         ProductOrderDto3 queryDto = new ProductOrderDto3();

@@ -55,7 +55,7 @@ public class Test01_Update {
         studentDto.getScoreList().get(0).setDeleted(1);
         studentDto.getScoreList().get(1).setName(name);
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, false, Arrays.asList("scoreList","courseList"), false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, false, Arrays.asList("scoreList","courseList"), false, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -64,6 +64,24 @@ public class Test01_Update {
         assert(studentDto1.getCourseList().stream().filter(x -> x.getCourseId().equals(score0)).findAny().isPresent());
         assert(studentDto1.getScoreList().size() == 1);
         assert(name.equals(studentDto1.getScoreList().get(0).getName()));
+
+        String studentName2 = "studentName2";
+        studentDto1.setName(studentName2 + "024");
+        mybatisAccessorService.update(studentDto1, false, null, false ,null);
+
+        queryDto.setName(studentName2);
+        StudentDto studentDto2 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
+        assert((studentName2 + "024").equals(studentDto2.getName()));
+
+        MybatisAccessorException ex0 = null;
+        try {
+            studentDto2.setStudentId(9999999);
+            mybatisAccessorService.update(studentDto2, false, null, false ,null);
+        } catch (MybatisAccessorException ex) {
+            ex0 = ex;
+            ex.printStackTrace();
+        }
+        assert(ex0 != null);
     }
 
     @Test
@@ -94,7 +112,7 @@ public class Test01_Update {
         studentDto.getScoreList().get(0).setDeleted(1);
         studentDto.getScoreList().get(1).setName(name);
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, false, Arrays.asList("courseList"), false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, false, Arrays.asList("courseList"), false, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation( queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -132,7 +150,7 @@ public class Test01_Update {
         studentDto.getScoreList().get(0).setDeleted(1);
         studentDto.getScoreList().get(1).setName(name);
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, false, Arrays.asList("scoreList","courseList"), true, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, false, Arrays.asList("scoreList","courseList"), true, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -174,7 +192,7 @@ public class Test01_Update {
         studentDto.setScoreList(scoreDtoList);
 
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, false, Arrays.asList("scoreList","courseList"), false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, false, Arrays.asList("scoreList","courseList"), false, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -216,7 +234,7 @@ public class Test01_Update {
         studentDto.setScoreList(scoreDtoList);
 
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, false, Arrays.asList("scoreList"), false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, false, Arrays.asList("scoreList"), false, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -255,7 +273,7 @@ public class Test01_Update {
         studentDto.getScoreList().get(0).setDeleted(1);
         studentDto.getScoreList().get(1).setName(name);
         studentDto.setGrade(score0);
-        mybatisAccessorService.update(studentDto, true, null, false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto, true, null, false, null);
 
         StudentDto studentDto1 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
 
@@ -277,7 +295,7 @@ public class Test01_Update {
 //        dto.getScoreList().get(0).setName("testing");
 //        dto.getScoreList().add(ScoreDto.builder().score(BigDecimal.valueOf(88)).name("ddd").courseId(123).build());
 //
-//        mybatisAccessorService.update(dto, "scoreList", true, false);
+//        mybatisAccessorService.saveOrUpdate(dto, "scoreList", true, false);
 //
 //    }
 //
@@ -296,7 +314,7 @@ public class Test01_Update {
 //        dto.getScoreList().get(0).setName("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaddddddddddd");
 //        Exception e = null;
 //        try {
-//            mybatisAccessorService.update(dto, "scoreList", false, false);
+//            mybatisAccessorService.saveOrUpdate(dto, "scoreList", false, false);
 //        } catch (Exception ex) {
 //            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 //            e = ex;
@@ -332,7 +350,7 @@ public class Test01_Update {
 //
 //        Exception e = null;
 //        try {
-//            mybatisAccessorService.update(dto, "scoreList", false, false);
+//            mybatisAccessorService.saveOrUpdate(dto, "scoreList", false, false);
 //        } catch (Exception ex) {
 //            e = ex;
 //        }
@@ -356,7 +374,7 @@ public class Test01_Update {
 //        Integer scoreSize = dto.getScoreList().size();
 //        dto.getScoreList().get(0).setDeleted(1);
 //
-//        mybatisAccessorService.update(dto, "scoreList", false, false);
+//        mybatisAccessorService.saveOrUpdate(dto, "scoreList", false, false);
 //
 //        StudentDto dto2 = mybatisAccessorService.getDtoByAnnotation(StudentDto.class, studentDto, "scoreList");
 //        assert(dto2.getName().equals(name2));

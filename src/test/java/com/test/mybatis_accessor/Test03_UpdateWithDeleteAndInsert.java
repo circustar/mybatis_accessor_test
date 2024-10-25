@@ -59,7 +59,7 @@ public class Test03_UpdateWithDeleteAndInsert {
         studentDto1.setScoreList(null);
         studentDto1.setCourseList(null);
         studentDto1.setName(studentName + "test");
-        mybatisAccessorService.update(studentDto1, true, null, true, null);
+        mybatisAccessorService.saveOrUpdate(studentDto1, true, null, true, null);
 
         StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
         assert(studentDto2 != null);
@@ -82,7 +82,7 @@ public class Test03_UpdateWithDeleteAndInsert {
         studentDto1.setScoreList(updateScoreList);
         studentDto1.setCourseList(updateCourseList);
         studentDto1.setName(studentName + "test");
-        mybatisAccessorService.update(studentDto1, true, null, false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto1, true, null, false, null);
 
         StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
         assert(studentDto2 != null);

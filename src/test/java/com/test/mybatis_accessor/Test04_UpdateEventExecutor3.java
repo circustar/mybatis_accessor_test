@@ -108,7 +108,7 @@ public class Test04_UpdateEventExecutor3 {
         orderDto.getOrderDetails().stream().filter(x -> x.getProductName().equals("n4")).forEach(x -> x.setDeleted(1));
         orderDto.getOrderDetails().stream().filter(x -> x.getProductName().equals("n1")).forEach(x -> x.setWeight(newWeight1));
         orderDto.setCreateUser(createUser);
-        mybatisAccessorService.update(orderDto, true, null, false, null);
+        mybatisAccessorService.saveOrUpdate(orderDto, true, null, false, null);
 
         ProductOrderDto po = mybatisAccessorService.getDtoById(ProductOrderDto.class, orderDto.getOrderId(), true ,null);
         assert(po!= null);

@@ -7,6 +7,7 @@ import com.circustar.mybatis_accessor.listener.event.update.UpdateCountSqlEvent;
 import com.circustar.mybatis_accessor.listener.event.update.UpdateSumSqlEvent;
 import com.circustar.mybatis_accessor.annotation.scan.DtoEntityRelation;
 import com.test.mybatis_accessor.entity.PersonInfo2;
+import com.test.mybatis_accessor.service.IPersonInfo2Service;
 import com.test.mybatis_accessor.service.IPersonInfoService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-@DtoEntityRelation(entityClass = PersonInfo2.class, service = IPersonInfoService.class)
+@DtoEntityRelation(entityClass = PersonInfo2.class, service = IPersonInfo2Service.class)
 @UpdateEvent(onExpression = "", updateEventClass = UpdateCountSqlEvent.class, updateParams = {"teamCount", "personInfoList"})
 @UpdateEvent(onExpression = "", updateEventClass = UpdateSumSqlEvent.class, updateParams = {"teamTotalPoint", "personInfoList", "point"})
 @UpdateEvent(onExpression = "", updateEventClass = UpdateAvgSqlEvent.class, updateParams = {"teamAveragePoint", "personInfoList", "point", "2"})

@@ -53,4 +53,13 @@ public class Test00_DeleteAll {
             throw ex;
         }
     }
+
+    @Test
+    public void stringTrim() {
+        String str = "this is a book ;";
+        String str1 = "this is a book ;\n";
+        System.out.print("s1:"+str1.trim());
+        System.out.print("s2:"+str);
+        System.out.print("s3");
+    }
 }

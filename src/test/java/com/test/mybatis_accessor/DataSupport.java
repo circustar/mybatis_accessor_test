@@ -11,10 +11,7 @@ import com.test.mybatis_accessor.entity.StudentCourse;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -42,10 +39,21 @@ public class DataSupport {
         }
 
         if(scoreCount > 0) {
-            List<ScoreDto> scoreDtoList = IntStream.rangeClosed(1, scoreCount).boxed().map(x -> ScoreDto.builder()
-                    .courseId(1).name(coursePrefix + "_" + x).score(BigDecimal.valueOf(random.nextInt(100)))
-                    .build()).collect(Collectors.toList());
-            studentDto.setScoreList(scoreDtoList);
+            studentDto.setScoreList(new ArrayList<>());
+            int scoreCount1 = scoreCount / 2 - 1;
+            if(scoreCount1 > 0) {
+                List<ScoreDto> scoreDtoList = IntStream.rangeClosed(1, scoreCount1).boxed().map(x -> ScoreDto.builder()
+                        .courseId(1).name(coursePrefix + "1_" + x).score(BigDecimal.valueOf(random.nextInt(100)))
+                        .build()).collect(Collectors.toList());
+                studentDto.getScoreList().addAll(scoreDtoList);
+            }
+            int scoreCount2 = scoreCount - scoreCount1;
+            if(scoreCount2 > 0) {
+                List<ScoreDto> scoreDtoList = IntStream.rangeClosed(1, scoreCount2).boxed().map(x -> ScoreDto.builder()
+                        .courseId(2).name(coursePrefix + "2_" + x).score(BigDecimal.valueOf(random.nextInt(100)))
+                        .build()).collect(Collectors.toList());
+                studentDto.getScoreList().addAll(scoreDtoList);
+            }
         }
 
         // 插入数据

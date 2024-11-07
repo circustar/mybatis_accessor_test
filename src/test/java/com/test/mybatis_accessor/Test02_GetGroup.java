@@ -1,7 +1,9 @@
 package com.test.mybatis_accessor;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.circustar.mybatis_accessor.common.MybatisAccessorException;
 import com.circustar.mybatis_accessor.support.MybatisAccessorService;
+import com.test.mybatis_accessor.dto.StudentAverageScore2Dto;
 import com.test.mybatis_accessor.dto.StudentAverageScoreDto;
 import com.test.mybatis_accessor.dto.StudentDto;
 import com.test.mybatis_accessor.dto.StudentQueryDto;
@@ -85,5 +87,15 @@ public class Test02_GetGroup {
         assert(list.size() == 1);
         list.stream().forEach(x -> log.info(x.toString()));
         log.info("--- log end ---");
+    }
+
+    @Test
+    public void TestGetDtoListByAnnotation3() throws MybatisAccessorException {
+        StudentAverageScore2Dto studentQueryDto = new StudentAverageScore2Dto();
+        studentQueryDto.setStudentId(this.studentDto.getStudentId());
+        List<StudentAverageScore2Dto> list = mybatisAccessorService.getDtoListByAnnotation(studentQueryDto);
+        log.info("--- log start ---");
+        assert(list != null);
+        assert(list.size() == 2);
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 public class StudentStatistics implements Serializable {
     private Integer studentId;
 
+    private Integer courseId;
     private String name;
 
     private BigDecimal maxScore;

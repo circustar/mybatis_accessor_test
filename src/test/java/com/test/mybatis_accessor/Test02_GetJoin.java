@@ -5,6 +5,7 @@ import com.circustar.mybatis_accessor.support.MybatisAccessorService;
 import com.test.mybatis_accessor.dto.ScoreDto;
 import com.test.mybatis_accessor.dto.StudentDto;
 import com.test.mybatis_accessor.dto.StudentDto3;
+import com.test.mybatis_accessor.dto.StudentDto7;
 import com.test.mybatis_accessor.entity.Score;
 import com.test.mybatis_accessor.entity.Student;
 import lombok.extern.slf4j.Slf4j;
@@ -144,5 +145,19 @@ public class Test02_GetJoin {
         log.info("--- log end ---");
     }
 
+    @Test
+    public void TestGetDtoListByAnnotation4() throws MybatisAccessorException {
+        StudentDto7 studentDto = new StudentDto7();
+        studentDto.setName(this.studentName);
+        studentDto.setDeleted(0);
+        List<StudentDto7> list = mybatisAccessorService.getDtoListByAnnotation(studentDto);
+        log.info("--- log start ---");
+        assert(list != null);
+        assert(list.size() == 2);
+        log.info(list.toString());
+        assert(list.get(0).getScoreList() != null && list.get(0).getScoreList().size() == 1 );
+        assert(list.get(1).getScoreList() != null && list.get(0).getScoreList().size() == 1 );
+        log.info("--- log end ---");
+    }
 
 }

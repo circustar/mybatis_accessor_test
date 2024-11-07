@@ -1,6 +1,6 @@
 package com.test.mybatis_accessor.dto;
 
-import com.circustar.mybatis_accessor.annotation.*;
+import com.circustar.mybatis_accessor.annotation.Connector;
 import com.circustar.mybatis_accessor.annotation.dto.DeleteFlag;
 import com.circustar.mybatis_accessor.annotation.dto.QueryJoin;
 import com.circustar.mybatis_accessor.annotation.dto.QueryWhere;
@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DtoEntityRelation(entityClass = Student.class, service = IStudentService.class)
-public class StudentDto3 {
+public class StudentDto7 {
     private Integer studentId;
 
     @QueryWhere(connector = Connector.LIKE_RIGHT)
@@ -32,8 +32,12 @@ public class StudentDto3 {
 
     private Integer version;
 
-    @QueryJoin()
-    private List<ScoreDto> scoreList;
-
     private String uselessColumnForTest;
+
+    private Integer param0 = 0;
+
+    @QueryJoin(subQueryExpression = "select max(t.score_id) score_id, t.student_id, max(t.course_id) course_id, sum(t.score) score\n" +
+            ",'' name, 0 deleted, max(t.version) version from score t where t.deleted = #{param0} \n" +
+            "group by student_id", tableAlias = "t", joinExpression = "t.student_id = student.student_id")
+    private List<ScoreDto> scoreList;
 }

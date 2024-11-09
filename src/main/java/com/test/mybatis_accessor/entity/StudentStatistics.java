@@ -26,4 +26,6 @@ public class StudentStatistics implements Serializable {
     private BigDecimal minScore;
 
     private BigDecimal averageScore;
+    @TableField(exist = false)
+    private String notExistColumn;
 }

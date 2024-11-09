@@ -1,6 +1,7 @@
 package com.test.mybatis_accessor.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.circustar.mybatis_accessor.annotation.entity.IdReference;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,5 +41,8 @@ public class PersonInfo extends BaseEntity implements Serializable {
 
     @TableLogic
     private Integer deleted;
+
+    @TableField(exist = false)
+    private List<PersonInfo2> personInfoList;
 
 }

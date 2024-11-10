@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @FieldNameConstants
@@ -24,16 +23,16 @@ public class StudentAverageScoreDto {
     @QueryWhere
     private Integer studentId;
 
-    @QuerySelect("max(student.name)")
+    @QueryColumn("max(student.name)")
     private String name;
 
-    @QuerySelect("avg(score.score)")
+    @QueryColumn("avg(score.score)")
     private BigDecimal averageScore;
 
-    @QuerySelect("max(score.score)")
+    @QueryColumn("max(score.score)")
     private BigDecimal maxScore;
 
-    @QuerySelect("min(score.score)")
+    @QueryColumn("min(score.score)")
     @QueryHaving(expression = "count(*) > 1")
     private BigDecimal minScore;
 

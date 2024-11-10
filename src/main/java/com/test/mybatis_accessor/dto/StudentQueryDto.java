@@ -1,7 +1,7 @@
 package com.test.mybatis_accessor.dto;
 
 import com.circustar.mybatis_accessor.annotation.*;
-import com.circustar.mybatis_accessor.annotation.dto.QuerySelect;
+import com.circustar.mybatis_accessor.annotation.dto.QueryColumn;
 import com.circustar.mybatis_accessor.annotation.dto.QueryWhere;
 import com.circustar.mybatis_accessor.annotation.dto.Selector;
 import com.circustar.mybatis_accessor.annotation.scan.DtoEntityRelation;
@@ -27,7 +27,7 @@ public class StudentQueryDto {
     @QueryWhere(connector = Connector.LIKE_RIGHT)
     private String name;
 
-    @QuerySelect("(select max(score.name) from score where score.student_id = student.student_id)")
+    @QueryColumn("(select max(score.name) from score where score.student_id = student.student_id)")
     private String score_name;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

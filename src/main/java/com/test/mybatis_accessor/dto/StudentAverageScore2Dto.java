@@ -24,16 +24,16 @@ public class StudentAverageScore2Dto {
     @QueryGroupBy(expression = "score.course_id")
     private Integer courseId;
 
-    @QuerySelect("max(student.name)")
+    @QueryColumn("max(student.name)")
     private String name;
 
-    @QuerySelect("avg(score.score)")
+    @QueryColumn("avg(score.score)")
     private BigDecimal averageScore;
 
-    @QuerySelect("max(score.score)")
+    @QueryColumn("max(score.score)")
     private BigDecimal maxScore;
 
-    @QuerySelect("min(score.score)")
+    @QueryColumn("min(score.score)")
     private BigDecimal minScore;
 
     @QueryJoin(tableAlias = "score",joinExpression = "score.student_id = student.student_id", order = 1)

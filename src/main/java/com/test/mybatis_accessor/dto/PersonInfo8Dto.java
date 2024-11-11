@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,9 +24,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
 @Builder(toBuilder = true)
 @DtoEntityRelation(entityClass = PersonInfo2.class, service = IPersonInfo2Service.class)
-@UpdateEvent(onExpression = "", updateEventClass = UpdateCountEvent.class, updateParams = {"teamCount", "personInfoList"})
+@UpdateEvent(onExpression = "", updateEventClass = UpdateCountEvent.class, updateParams = {PersonInfo8Dto.Fields.teamCount, PersonInfo8Dto.Fields.personInfoList})
 @PropertyChangeEvent(listenProperties = "teamCount", toExpression = "", updateEventClass = ExecuteUpdateBean2.class)
 public class PersonInfo8Dto extends BaseDto implements Serializable {
     private Integer personId;

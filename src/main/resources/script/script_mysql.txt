@@ -1,0 +1,225 @@
+CREATE TABLE `class_group` (
+  `CLASS_GROUP_ID` int NOT NULL AUTO_INCREMENT,
+  `GROUP_NAME` varchar(100) DEFAULT NULL,
+  `DELETED` int DEFAULT '0',
+  `UPPER_CLASS_GROUP_ID` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `version` int DEFAULT '1',
+  PRIMARY KEY (`CLASS_GROUP_ID`)
+);
+
+CREATE TABLE `course` (
+  `course_id` int NOT NULL AUTO_INCREMENT,
+  `course_name` varchar(45) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `deleted` tinyint DEFAULT '0',
+  `create_date` date DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`course_id`)
+);
+
+CREATE TABLE `person_info` (
+  `person_id` int NOT NULL AUTO_INCREMENT,
+  `leader_id` int DEFAULT NULL,
+  `person_name` varchar(45) DEFAULT NULL,
+  `point` decimal(10,2) DEFAULT NULL,
+  `team_count` int DEFAULT NULL,
+  `team_total_point` decimal(10,2) DEFAULT NULL,
+  `team_average_point` decimal(10,2) DEFAULT NULL,
+  `weight` decimal(10,2) DEFAULT NULL,
+  `share_poll` decimal(10,2) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`person_id`)
+);
+
+CREATE TABLE `privilege` (
+  `privilege_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `privilege_name` varchar(45) NOT NULL,
+  `version` int NOT NULL DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `deleted` tinyint DEFAULT '0',
+  PRIMARY KEY (`privilege_id`)
+);
+
+CREATE TABLE `product` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(45) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+) ;
+
+CREATE TABLE `product_order` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `order_name` varchar(45) DEFAULT NULL,
+  `total_count` int DEFAULT NULL,
+  `total_weight` decimal(10,2) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+);
+
+CREATE TABLE `product_order_detail` (
+  `order_detail_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `product_name` varchar(100) DEFAULT NULL,
+  `weight` decimal(10,2) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`order_detail_id`)
+);
+
+CREATE TABLE `role` (
+  `role_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(45) NOT NULL,
+  `version` int NOT NULL DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `deleted` tinyint DEFAULT '0',
+  PRIMARY KEY (`role_id`)
+) ;
+
+CREATE TABLE `role_privilege` (
+  `role_privilege_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int NOT NULL,
+  `privilege_id` int NOT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_privilege_id`)
+);
+
+CREATE TABLE `score` (
+  `score_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `student_id` int NOT NULL,
+  `course_id` int NOT NULL,
+  `score` decimal(5,2) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`score_id`)
+);
+
+CREATE TABLE `student` (
+  `student_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `grade` int DEFAULT NULL,
+  `version` int NOT NULL DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `deleted` tinyint DEFAULT '0',
+  PRIMARY KEY (`student_id`)
+);
+
+CREATE TABLE `student_course` (
+  `student_course_id` int NOT NULL AUTO_INCREMENT,
+  `course_id` int DEFAULT NULL,
+  `student_id` int DEFAULT NULL,
+  `select_date` datetime DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`student_course_id`)
+);
+
+CREATE TABLE `student_group` (
+  `student_group_id` int NOT NULL AUTO_INCREMENT,
+  `student_id` int DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`student_group_id`)
+);
+
+CREATE TABLE `teacher` (
+  `teacher_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `gender` int DEFAULT NULL,
+  `mobile` varchar(45) DEFAULT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`teacher_id`)
+);
+
+CREATE TABLE `user` (
+  `user_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `nickname` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `tel` varchar(45) DEFAULT NULL,
+  `version` int NOT NULL DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `deleted` tinyint DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ;
+
+CREATE TABLE `user_role` (
+  `user_role_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `role_id` int NOT NULL,
+  `deleted` int DEFAULT '0',
+  `version` int DEFAULT '1',
+  `create_user` int DEFAULT NULL,
+  `update_user` int DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_role_id`)
+) ;
+

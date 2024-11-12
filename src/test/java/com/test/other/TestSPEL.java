@@ -11,17 +11,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.ParserContext;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.expression.*;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.ReflectiveMethodExecutor;
+import org.springframework.expression.spel.support.SimpleEvaluationContext;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @Slf4j
@@ -84,5 +87,43 @@ public class TestSPEL {
         orderdto.setOrderDetails(Arrays.asList(productOrderDetailDto1, productOrderDetailDto2, productOrderDetailDto3, productOrderDetailDto4));
 
         System.out.println(SPELParser.parseStringExpression(orderdto, "#{orderDetails?.size() > 0}"));
+    }
+
+
+    @Test
+    public void Test5() throws NoSuchMethodException {
+        ExpressionParser parser =new SpelExpressionParser();
+        ProductOrderDto orderdto = ProductOrderDto.builder().amount(BigDecimal.valueOf(123.45d))
+                .orderName("test").build();
+        StandardEvaluationContext context = new StandardEvaluationContext(orderdto);
+        Method method = com.circustar.common_utils.collection.StringUtils.class.getDeclaredMethod("c2l", new Class[]{String.class});
+
+        context.addMethodResolver(new MethodResolver() {
+            @Override
+            public MethodExecutor resolve(EvaluationContext evaluationContext, Object o, String s, List<TypeDescriptor> list) throws AccessException {
+                if("c2l".equals(s)) {
+                    return new ReflectiveMethodExecutor(method);
+                }
+                return null;
+            }
+        });
+//        Method method = com.circustar.common_utils.collection.StringUtils.class.getDeclaredMethod("camelToUnderLine", new Class[]{String.class});
+        //context.registerFunction("camelToUnderLine", method);
+//        context.setVariable("camelToUnderLine", method);
+//        context.registerFunction("camelToUnderLine", method);
+//        final Expression o = parser.parseExpression("name is #{T(com.circustar.common_utils.collection.StringUtils).camelToUnderLine('hello.testIgnored')}", new TemplateParserContext());
+        final Expression o = parser.parseExpression("name is #{c2l('testPrefix.testSuffix')}", new TemplateParserContext());
+
+        System.out.println(o.getValue(context).toString());
+        System.out.println(o);
+    }
+
+    @Test
+    public void Test6() throws NoSuchMethodException {
+        ProductOrderDto orderdto = ProductOrderDto.builder().amount(BigDecimal.valueOf(123.45d))
+                .orderName("order_name:aaa").build();
+        System.out.println(SPELParser.parseStringExpression(orderdto, "name is #{orderName}1: #{c2l('testPrefix1.testSuffixMethod1Test')}"));
+        System.out.println(SPELParser.parseStringExpression(orderdto, "name is #{orderName}2: #{c2l('testSuffixMethod2Test')}"));
+        System.out.println(SPELParser.parseStringExpression(orderdto, "name is #{orderName}3: #{c2l('testPrefix1.testSuffixMethod1Test.test3Adc')}"));
     }
 }

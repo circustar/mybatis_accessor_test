@@ -78,7 +78,7 @@ public class Test01_Save {
             mybatisAccessorService.deleteByIds(StudentDto.class
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
                     , false
-                    , Arrays.asList("scoreList","courseList"), false, null);
+                    , Arrays.asList(StudentDto.Fields.scoreList,StudentDto.Fields.courseList), false, null);
 
             // 验证主项被删除
             List<StudentDto> dtoListVerify = mybatisAccessorService.getDtoListByAnnotation(queryDto);

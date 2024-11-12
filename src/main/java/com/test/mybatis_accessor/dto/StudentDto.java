@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DtoEntityRelation(entityClass = Student.class, service = IStudentService.class)
+@FieldNameConstants
 public class StudentDto implements Serializable {
     private Integer studentId;
 

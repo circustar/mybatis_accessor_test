@@ -4,9 +4,7 @@ import com.circustar.mybatis_accessor.annotation.event.UpdateEvent;
 import com.circustar.mybatis_accessor.annotation.scan.DtoEntityRelation;
 import com.circustar.mybatis_accessor.listener.event.update.UpdateAssignEvent;
 import com.circustar.mybatis_accessor.listener.event.update.UpdateCountEvent;
-import com.circustar.mybatis_accessor.listener.event.update.UpdateLogEvent;
-import com.circustar.mybatis_accessor.listener.event.update.UpdateSumEvent;
-import com.circustar.mybatis_accessor.provider.command.IUpdateCommand;
+import com.circustar.mybatis_accessor.listener.event.update.UpdateMinEvent;
 import com.test.mybatis_accessor.entity.ProductOrder;
 import com.test.mybatis_accessor.service.IProductOrderService;
 import lombok.AllArgsConstructor;
@@ -23,8 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DtoEntityRelation(entityClass = ProductOrder.class, service = IProductOrderService.class)
-@UpdateEvent(onExpression = "", updateEventClass = UpdateLogEvent.class, updateType = { IUpdateCommand.UpdateType.INSERT})
-public class ProductOrderDto4 extends BaseDto implements Serializable {
+public class ProductOrderDto6 extends BaseDto implements Serializable {
     private Integer orderId;
 
     private String orderName;
@@ -36,6 +33,4 @@ public class ProductOrderDto4 extends BaseDto implements Serializable {
     private BigDecimal amount;
 
     private Integer deleted;
-
-    private List<ProductOrderDetail4Dto> orderDetails;
 }

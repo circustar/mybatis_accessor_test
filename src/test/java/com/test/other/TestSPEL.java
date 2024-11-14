@@ -127,4 +127,13 @@ public class TestSPEL {
         System.out.println(SPELParser.parseStringExpression(orderdto, "name is #{orderName}2: #{c2l('testSuffixMethod2Test')}"));
         System.out.println(SPELParser.parseStringExpression(orderdto, "name is #{orderName}3: #{c2l('testPrefix1.testSuffixMethod1Test.test3Adc')}"));
     }
+
+    @Test
+    public void Test7() throws NoSuchMethodException {
+        ExpressionParser parser =new SpelExpressionParser();
+        ProductOrderDto orderdto = ProductOrderDto.builder().amount(BigDecimal.valueOf(123.45d))
+                .orderName("test").build();
+        StandardEvaluationContext context = new StandardEvaluationContext(orderdto);
+
+    }
 }

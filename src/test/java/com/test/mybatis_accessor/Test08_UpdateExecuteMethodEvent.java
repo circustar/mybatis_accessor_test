@@ -43,7 +43,7 @@ public class Test08_UpdateExecuteMethodEvent {
             List<ProductOrderDto> dtoListVerify = mybatisAccessorService.getDtoListByAnnotation(queryDto);
             assert(dtoListVerify == null || dtoListVerify.size() == 0);
         }
-        Integer orderID = new Random().nextInt();
+        Integer orderID = new Random().nextInt(50000) + 100000;
         ProductOrderDetail6Dto orderDetail6Dto = ProductOrderDetail6Dto.builder()
                 .orderId(orderID).productName("testing").productId(1).weight(BigDecimal.TEN)
                 .amount(BigDecimal.TEN)

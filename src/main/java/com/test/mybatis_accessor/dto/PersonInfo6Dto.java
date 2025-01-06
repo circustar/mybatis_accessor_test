@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DtoEntityRelation(entityClass = PersonInfo.class, service = IPersonInfoService.class)
-@UpdateEvent(onExpression = "", updateEventClass = UpdateFillEvent.class, updateParams = {"sharePoll", "remainPoll", "personInfoList", "sharePoll", "20", "personName"})
+@UpdateEvent(onExpression = "", updateEventClass = UpdateFillEvent.class, updateParams = {"sharePoll", "remainPoll", "personInfoList", "sharePoll", "fillValue", "personName"})
 public class PersonInfo6Dto extends BaseDto implements Serializable {
     private Integer personId;
 
@@ -42,6 +42,8 @@ public class PersonInfo6Dto extends BaseDto implements Serializable {
     private BigDecimal remainPoll;
 
     private Integer deleted;
+
+    private BigDecimal fillValue = new BigDecimal(20);
 
     private List<PersonInfo6Dto> personInfoList;
 }

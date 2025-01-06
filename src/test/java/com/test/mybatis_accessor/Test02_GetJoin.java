@@ -1,6 +1,8 @@
 package com.test.mybatis_accessor;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.circustar.mybatis_accessor.common.MybatisAccessorException;
+import com.circustar.mybatis_accessor.response.PageInfo;
 import com.circustar.mybatis_accessor.support.MybatisAccessorService;
 import com.test.mybatis_accessor.dto.ScoreDto;
 import com.test.mybatis_accessor.dto.StudentDto;
@@ -31,9 +33,13 @@ public class Test02_GetJoin {
     private String studentName1 = "testJoin1";
     private String courseNamePrefix1 = "courseJoin1";
     private StudentDto studentDto1 = null;
+    private StudentDto studentDto3 = null;
 
     private String studentName2 = "testJoin2";
     private String courseNamePrefix2 = "courseJoin2";
+
+//    private String studentName3 = "testJoin3";
+//    private String courseNamePrefix3 = "courseJoin3";
     private StudentDto studentDto2 = null;
 
     @Before
@@ -47,6 +53,11 @@ public class Test02_GetJoin {
             this.studentDto2 = DataSupport.createStudentData(mybatisAccessorService, studentName2, 4, 3, courseNamePrefix2);
             log.info(this.studentDto2.toString());
         }
+//
+//        if(this.studentDto3 == null) {
+//            this.studentDto3 = DataSupport.createStudentData(mybatisAccessorService, studentName3, 2, 2, courseNamePrefix3);
+//            log.info(this.studentDto3.toString());
+//        }
     }
 
     @Test
@@ -160,4 +171,15 @@ public class Test02_GetJoin {
         log.info("--- log end ---");
     }
 
+//    @Test
+//    public void TestGetDtoPageByAnnotation() throws MybatisAccessorException {
+//        StudentDto7 studentDto = new StudentDto7();
+//        studentDto.setName(this.studentName);
+//        studentDto.setDeleted(0);
+//        PageInfo<StudentDto7> pageInfo = mybatisAccessorService.getDtoPageByAnnotation(studentDto, 2, 2);
+//        log.info("--- log start ---");
+//        assert(pageInfo != null);
+//        assert(pageInfo.getCurrent() == 2);
+//        assert(pageInfo.getRecords().size() == 1);
+//    }
 }

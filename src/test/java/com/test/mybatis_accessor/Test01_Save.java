@@ -390,7 +390,7 @@ public class Test01_Save {
 
         List<StudentDto> dtoList = mybatisAccessorService.getDtoListByAnnotation(query);
         if(dtoList != null && dtoList.size() > 0) {
-            mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
+            mybatisAccessorService.deleteByIds(StudentDto.class.getName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
                     , false
                     , Arrays.asList("scoreList"), false, null);

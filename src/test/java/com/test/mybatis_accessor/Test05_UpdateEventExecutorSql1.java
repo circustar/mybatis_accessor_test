@@ -52,7 +52,7 @@ public class Test05_UpdateEventExecutorSql1 {
             return;
         }
         Set<Serializable> idList = dtoList.stream().map(x -> x.getPersonId()).collect(Collectors.toSet());
-        mybatisAccessorService.deleteByIds(PersonInfo3Dto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo3Dto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_name",testName);
@@ -122,7 +122,7 @@ public class Test05_UpdateEventExecutorSql1 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);
@@ -197,7 +197,7 @@ public class Test05_UpdateEventExecutorSql1 {
         assert(Person2_1.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
         assert(Person2_2.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
 
-        PersonInfo3Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, Person1_1.get(0).getPersonId(), true, null);
+        PersonInfo3Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, Person1_1.get(0).getPersonId(), null);
         assert(dto1_1.getPersonInfoList().size() == 2);
         assert(dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonId().equals(Person2_1.get(0).getPersonId())
                 || x.getPersonId().equals(Person2_2.get(0).getPersonId())).count() == 2);
@@ -220,7 +220,7 @@ public class Test05_UpdateEventExecutorSql1 {
         qw.eq("person_name",testName + "1-1");
 
         List<PersonInfo3Dto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfo3Dto.class, qw);
-        PersonInfo3Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dtoList.get(0).getPersonId(), true, null);
+        PersonInfo3Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dtoList.get(0).getPersonId(), null);
 
         dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-1")).forEach(x -> x.setDeleted(1));
         PersonInfo3Dto dto2_2 = dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-2")).findAny().get();
@@ -240,10 +240,10 @@ public class Test05_UpdateEventExecutorSql1 {
 
         dto1_1.getPersonInfoList().add(personInfo2_3);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, null, false, null);
         assert(mainPersonInfo != null);
 
-        dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dto1_1.getPersonId(), true, null);
+        dto1_1 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dto1_1.getPersonId(),  null);
         BigDecimal maxDiffPoint = BigDecimal.valueOf(0.001f);
 
         BigDecimal totalPoint = dto1_1.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
@@ -254,7 +254,7 @@ public class Test05_UpdateEventExecutorSql1 {
         assert(dto1_1.getSharePoll().equals(totalSharePoll));
         assert(dto1_1.getTeamAveragePoint().subtract(totalPoint.divide(BigDecimal.valueOf(count))).compareTo(maxDiffPoint) < 0);
 
-        dto2_2 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dto2_2.getPersonId(), true, null);
+        dto2_2 = mybatisAccessorService.getDtoById(PersonInfo3Dto.class, dto2_2.getPersonId(),  null);
         totalPoint = dto2_2.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
         totalSharePoll = dto2_2.getPersonInfoList().stream().map(x -> x.getSharePoll()).reduce((x, y) -> x.add(y)).get();
         count = dto2_2.getPersonInfoList().size();

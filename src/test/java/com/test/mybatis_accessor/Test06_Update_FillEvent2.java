@@ -112,7 +112,7 @@ public class Test06_Update_FillEvent2 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);
@@ -173,7 +173,7 @@ public class Test06_Update_FillEvent2 {
         List<PersonInfoDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfoDto.class, qw);
         Set<Serializable> idList = dtoList.stream().filter(x -> x.getLeaderId() == null)
                 .map(x -> x.getPersonId()).collect(Collectors.toSet());
-        mybatisAccessorService.deleteByIds(PersonInfoDto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfoDto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_name",testName);

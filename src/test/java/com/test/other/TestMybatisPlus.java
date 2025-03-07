@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -142,6 +143,6 @@ public class TestMybatisPlus {
         List<StudentDto> a1 = new ArrayList<>();
         a1.add(s1);
         a1.add(s2);
-        mybatisAccessorService.updateList(a1, false, null, false, null);
+        mybatisAccessorService.updateList(a1,  Collections.emptyList(), false, null);
     }
 }

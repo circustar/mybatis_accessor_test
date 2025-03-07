@@ -53,9 +53,9 @@ public class Test01_Save {
         studentDto.setName(name);
         studentDto.setGrade(1);
 
-        Student student = mybatisAccessorService.save(studentDto, true, null, false, null);
+        Student student = mybatisAccessorService.save(studentDto, null, false, null);
 
-        mybatisAccessorService.deleteByIds(StudentDto3.class, Collections.singleton(student.getStudentId()), false, null, false, null);
+        mybatisAccessorService.deleteByIds(StudentDto3.class, Collections.singleton(student.getStudentId()), Collections.EMPTY_LIST, false, null);
 
         StudentDto queryDto = new StudentDto();
         queryDto.setName(testName);
@@ -77,7 +77,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList(StudentDto.Fields.scoreList,StudentDto.Fields.courseList), false, null);
 
             // 验证主项被删除
@@ -119,12 +118,12 @@ public class Test01_Save {
         studentDto.setCourseList(courseDtoList);
 
         // 插入数据
-        Student updateResult = mybatisAccessorService.save(studentDto, false
+        Student updateResult = mybatisAccessorService.save(studentDto
                 , Arrays.asList("scoreList","courseList"), false, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, false
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto
                 , Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
 
@@ -154,7 +153,6 @@ public class Test01_Save {
         if(dtoList != null && dtoList.size() > 0) {
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -186,11 +184,11 @@ public class Test01_Save {
         scoreDtoList.add(score2);
         studentDto.setScoreList(scoreDtoList);
 
-        Student updateResult = mybatisAccessorService.save(studentDto, false, null, false, null);
+        Student updateResult = mybatisAccessorService.save(studentDto, Collections.emptyList(), false, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(query, false, Arrays.asList("scoreList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(query, Arrays.asList("scoreList"));
         log.info(result.toString());
         assert(result != null);
         assert(result.getName().equals(name));
@@ -210,7 +208,6 @@ public class Test01_Save {
         if(dtoList != null && dtoList.size() > 0) {
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -251,14 +248,14 @@ public class Test01_Save {
         courseDtoList.add(course3);
         studentDto.setCourseList(courseDtoList);
 
-        Student updateResult = mybatisAccessorService.save(studentDto, true, Arrays.asList("scoreList"), false, null);
+        Student updateResult = mybatisAccessorService.save(studentDto, null, false, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
         StudentDto queryDto = new StudentDto();
         queryDto.setName(name);
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
         assert(result != null);
         assert(result.getName().equals(name));
@@ -278,7 +275,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -303,7 +299,7 @@ public class Test01_Save {
         studentDto.setName(name);
         studentDto.setGrade(1);
 
-        Student updateResult0 = mybatisAccessorService.save(studentDto, false, null, false, null);
+        Student updateResult0 = mybatisAccessorService.save(studentDto, Collections.emptyList(), false, null);
         assert(updateResult0 != null);
         studentDto.setStudentId(updateResult0.getStudentId());
 
@@ -324,11 +320,11 @@ public class Test01_Save {
         studentDto.setCourseList(courseDtoList);
 
         // 插入数据
-        Student updateResult = mybatisAccessorService.save(studentDto, false, Arrays.asList("scoreList","courseList"), true, null);
+        Student updateResult = mybatisAccessorService.save(studentDto, Arrays.asList("scoreList","courseList"), true, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
 
         // 验证主项被插入
@@ -374,14 +370,14 @@ public class Test01_Save {
         courseDtoList.add(course3);
         studentDto.setCourseList(courseDtoList);
 
-        Student updateResult = mybatisAccessorService.save(studentDto, true, Arrays.asList("scoreList"), false, null);
+        Student updateResult = mybatisAccessorService.save(studentDto, null, false, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
         StudentDto queryDto = new StudentDto();
         queryDto.setName(name);
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
         assert(result != null);
         assert(result.getName().equals(name));
@@ -392,7 +388,6 @@ public class Test01_Save {
         if(dtoList != null && dtoList.size() > 0) {
             mybatisAccessorService.deleteByIds(StudentDto.class.getName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList"), false, null);
 
             // 验证主项被删除
@@ -413,7 +408,7 @@ public class Test01_Save {
                 assert(scoreList == null || scoreList.size() == 0);
             }
         }
-        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto, Arrays.asList("scoreList","courseList"));
         assert(result2 == null);
         for(StudentCourseDto studentCourseDto : result.getCourseList()) {
             StudentCourse studentCourse = mybatisAccessorService.getEntityById(StudentCourseDto.class, studentCourseDto.getStudentCourseId());
@@ -451,7 +446,7 @@ public class Test01_Save {
         courseDtoList.add(course3);
         studentDto.setCourseList(courseDtoList);
 
-        Student updateResult = mybatisAccessorService.save(studentDto, true, Arrays.asList("scoreList","courseList"), false, null);
+        Student updateResult = mybatisAccessorService.save(studentDto, null, false, null);
         assert(updateResult != null);
         log.info(updateResult.toString());
 
@@ -469,7 +464,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -517,13 +511,13 @@ public class Test01_Save {
 
         // 插入数据
         List<Student> updateResult = mybatisAccessorService.saveList(Arrays.asList(studentDto2, studentDto)
-                , false, Arrays.asList("scoreList","courseList"), false, null);
+                , Arrays.asList("scoreList","courseList"), false, null);
         assert(updateResult != null && updateResult.size() == 2 && updateResult.get(0).getStudentId() != null);
         log.info(updateResult.toString());
 
         StudentDto queryDto1 = new StudentDto();
         queryDto1.setName(testName + "1");
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
 
         // 验证主项被插入
@@ -539,7 +533,7 @@ public class Test01_Save {
 
         StudentDto queryDto2 = new StudentDto();
         queryDto2.setName(testName + "2");
-        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, Arrays.asList("scoreList","courseList"));
         log.info(result2.toString());
 
         assert(result2 != null);
@@ -559,7 +553,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -607,13 +600,13 @@ public class Test01_Save {
 
         // 插入数据
         List<Student> updateResult = mybatisAccessorService.saveList(Arrays.asList(studentDto2, studentDto)
-                , false, null, false, null);
+                , Collections.EMPTY_LIST, false, null);
         assert(updateResult != null && updateResult.size() == 2 && updateResult.get(0).getStudentId() != null);
         log.info(updateResult.toString());
 
         StudentDto queryDto1 = new StudentDto();
         queryDto1.setName(testName + "1");
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
 
         // 验证主项被插入
@@ -625,7 +618,7 @@ public class Test01_Save {
 
         StudentDto queryDto2 = new StudentDto();
         queryDto2.setName(testName + "2");
-        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, Arrays.asList("scoreList","courseList"));
         log.info(result2.toString());
 
         assert(result2 != null);
@@ -645,7 +638,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -693,13 +685,13 @@ public class Test01_Save {
 
         // 插入数据
         List<Student> updateResult = mybatisAccessorService.saveList(Arrays.asList(studentDto2, studentDto)
-                , true, Arrays.asList("scoreList"), false, null);
+                , null, false, null);
         assert(updateResult != null && updateResult.size() == 2 && updateResult.get(0).getStudentId() != null);
         log.info(updateResult.toString());
 
         StudentDto queryDto1 = new StudentDto();
         queryDto1.setName(testName + "1");
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto1, Arrays.asList("scoreList","courseList"));
         log.info(result.toString());
 
         // 验证主项被插入
@@ -715,7 +707,7 @@ public class Test01_Save {
 
         StudentDto queryDto2 = new StudentDto();
         queryDto2.setName(testName + "2");
-        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, Arrays.asList("scoreList","courseList"));
         log.info(result2.toString());
 
         assert(result2 != null);
@@ -735,7 +727,6 @@ public class Test01_Save {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class.getSimpleName()
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除
@@ -766,7 +757,7 @@ public class Test01_Save {
         studentDto2.setGrade(2);
 
         List<Student> updateResult0 = mybatisAccessorService.saveList(Arrays.asList(studentDto1, studentDto2)
-                , false, null, false, null);
+                , Collections.EMPTY_LIST, false, null);
         assert(updateResult0 != null);
         studentDto1.setStudentId(updateResult0.get(0).getStudentId());
         studentDto2.setStudentId(updateResult0.get(1).getStudentId());
@@ -793,13 +784,13 @@ public class Test01_Save {
 
         // 插入数据
         List<Student> updateResult = mybatisAccessorService.saveList(Arrays.asList(studentDto1, studentDto2)
-                , false, Arrays.asList("scoreList","courseList"), true, null);
+                , Arrays.asList("scoreList","courseList"), true, null);
         assert(updateResult != null && updateResult.size() == 2);
         log.info(updateResult.toString());
 
         StudentDto queryDto1 = new StudentDto();
         queryDto1.setName(name1);
-        StudentDto result1 = mybatisAccessorService.getDtoByAnnotation(queryDto1, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result1 = mybatisAccessorService.getDtoByAnnotation(queryDto1, Arrays.asList("scoreList","courseList"));
         log.info(result1.toString());
 
         // 验证主项被插入
@@ -816,7 +807,7 @@ public class Test01_Save {
 
         StudentDto queryDto2 = new StudentDto();
         queryDto2.setName(name2);
-        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, false, Arrays.asList("scoreList","courseList"));
+        StudentDto result2 = mybatisAccessorService.getDtoByAnnotation(queryDto2, Arrays.asList("scoreList","courseList"));
         log.info(result2.toString());
 
         // 验证主项被插入
@@ -843,8 +834,7 @@ public class Test01_Save {
         if(classGroupList != null && classGroupList.size() > 0) {
             mybatisAccessorService.deleteByIds(ClassGroupDto.class.getSimpleName()
                     , classGroupList.stream().map(x -> x.getClassGroupId()).collect(Collectors.toSet())
-                    , false
-                    , null, false, null);
+                    , Collections.EMPTY_LIST, false, null);
             // 验证主项被删除
             List<StudentDto> dtoListVerify = mybatisAccessorService.getDtoListByAnnotation(query);
             assert(dtoListVerify == null || dtoListVerify.size() == 0);
@@ -916,7 +906,7 @@ public class Test01_Save {
 
         top.setSubClassGroups(Arrays.asList(generation1, generation2));
 
-        mybatisAccessorService.save(top, true, null, false, null);
+        mybatisAccessorService.save(top, null, false, null);
 
         List<ClassGroup> classGroupList2 = mybatisAccessorService.getEntityListByAnnotation(query);
         assert(classGroupList2 != null && classGroupList2.size() > 0);
@@ -963,8 +953,7 @@ public class Test01_Save {
         if(classGroupList != null && classGroupList.size() > 0) {
             mybatisAccessorService.deleteByIds(ClassGroupDto.class.getSimpleName()
                     , classGroupList.stream().map(x -> x.getClassGroupId()).collect(Collectors.toSet())
-                    , false
-                    , null, false, null);
+                    , Collections.EMPTY_LIST, false, null);
             // 验证主项被删除
             List<StudentDto> dtoListVerify = mybatisAccessorService.getDtoListByAnnotation(query);
             assert(dtoListVerify == null || dtoListVerify.size() == 0);
@@ -1058,7 +1047,7 @@ public class Test01_Save {
         generationA.setSubClassGroups(Arrays.asList(generationA1));
         top1.setSubClassGroups(Arrays.asList(generationA));
 
-        mybatisAccessorService.saveList(Arrays.asList(top0, top1), true, null, false, null);
+        mybatisAccessorService.saveList(Arrays.asList(top0, top1), null, false, null);
 
         List<ClassGroup> classGroupList2 = mybatisAccessorService.getEntityListByAnnotation(query);
         assert(classGroupList2 != null && classGroupList2.size() > 0);

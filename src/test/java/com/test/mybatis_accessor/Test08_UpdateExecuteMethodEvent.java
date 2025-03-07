@@ -36,7 +36,6 @@ public class Test08_UpdateExecuteMethodEvent {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(ProductOrderDto.class
                     , dtoList.stream().map(x -> x.getOrderId()).collect(Collectors.toSet())
-                    , true
                     , null, false, null);
 
             // 验证主项被删除
@@ -49,9 +48,9 @@ public class Test08_UpdateExecuteMethodEvent {
                 .amount(BigDecimal.TEN)
                 .productOrder6Dto(new ProductOrderDto6())
                 .build();
-        mybatisAccessorService.save(orderDetail6Dto, true, null, false, null);
+        mybatisAccessorService.save(orderDetail6Dto, null, false, null);
 
-        ProductOrderDto productOrderDto =  mybatisAccessorService.getDtoById(ProductOrderDto.class, orderID, true, null);
+        ProductOrderDto productOrderDto =  mybatisAccessorService.getDtoById(ProductOrderDto.class, orderID, null);
         assert(productOrderDto != null);
         assert(testName.equals(productOrderDto.getOrderName()));
         assert(productOrderDto.getOrderDetails() != null);

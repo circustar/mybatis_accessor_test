@@ -25,24 +25,24 @@ public class Test02_GetSelector {
     public void TestGetDtoById() throws MybatisAccessorException {
 
         log.info("--- log start ---");
-        RoleDto entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, false, Arrays.asList("privileges"));
+        RoleDto entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, Arrays.asList("privileges"));
         log.info(entity.toString());
         assert(entity != null);
         assert(entity.getPrivileges().size() > 0);
 
-        entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, false, Arrays.asList("rolePrivileges"));
+        entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, Arrays.asList("rolePrivileges"));
         log.info(entity.toString());
         assert(entity != null);
         assert(entity.getRolePrivileges().size() > 0);
 
-        entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, false, Arrays.asList("privileges", "rolePrivileges"));
+        entity = (RoleDto) mybatisAccessorService.getDtoById(RoleDto.class, 1, Arrays.asList("privileges", "rolePrivileges"));
         log.info(entity.toString());
         assert(entity != null);
         assert(entity.getPrivileges().size() > 0);
         assert(entity.getRolePrivileges().size() > 0);
         log.info("--- log end ---");
 
-        UserDto userDto = mybatisAccessorService.getDtoById(UserDto.class, 1, false, Arrays.asList("roles","privileges") );
+        UserDto userDto = mybatisAccessorService.getDtoById(UserDto.class, 1, Arrays.asList("roles","privileges") );
         log.info(userDto.toString());
         assert(userDto != null);
         assert(userDto.getPrivileges().size() > 0);
@@ -56,19 +56,19 @@ public class Test02_GetSelector {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.likeLeft("role_name", "1");
         RoleDto entity = (RoleDto) mybatisAccessorService.getDtoByQueryWrapper(new RoleDto(), queryWrapper
-                , false, Arrays.asList("privileges"));
+                , Arrays.asList("privileges"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
         assert(entity.getPrivileges().size() > 0);
 
-        entity = (RoleDto) mybatisAccessorService.getDtoByQueryWrapper(new RoleDto(), queryWrapper, false
+        entity = (RoleDto) mybatisAccessorService.getDtoByQueryWrapper(new RoleDto(), queryWrapper
                 , Arrays.asList("rolePrivileges"));
         log.info(entity.toString());
         assert(entity != null);
         assert(entity.getRolePrivileges().size() > 0);
 
-        entity = (RoleDto) mybatisAccessorService.getDtoByQueryWrapper(new RoleDto(), queryWrapper, false
+        entity = (RoleDto) mybatisAccessorService.getDtoByQueryWrapper(new RoleDto(), queryWrapper
                 , Arrays.asList("privileges","rolePrivileges"));
         log.info(entity.toString());
         assert(entity != null);

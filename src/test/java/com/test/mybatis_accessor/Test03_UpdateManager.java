@@ -8,6 +8,7 @@ import com.circustar.mybatis_accessor.support.MybatisAccessorUpdateManager;
 import com.test.mybatis_accessor.dto.ScoreDto;
 import com.test.mybatis_accessor.dto.StudentCourseDto;
 import com.test.mybatis_accessor.dto.StudentDto;
+import com.test.mybatis_accessor.mapper.ClassGroupMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,13 +39,15 @@ public class Test03_UpdateManager {
 
     @Autowired
     private MybatisAccessorUpdateManager updateManager;
+    @Autowired
+    private ClassGroupMapper classGroupMapper;
 
     @Test
     public void testUpdateManager() throws MybatisAccessorException {
 
         QueryWrapper queryWrapper2 = new QueryWrapper<>();
         queryWrapper2.likeRight("name", studentNamePrefix);
-        List<StudentDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(new StudentDto(), queryWrapper2);
+        List<StudentDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(StudentDto.class, queryWrapper2);
         if(!dtoList.isEmpty()) {
             dtoList.stream().forEach(x ->x.setDeleted(1));
             updateManager.putDto(dtoList, null);
@@ -72,11 +75,11 @@ public class Test03_UpdateManager {
 
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.likeRight("name", name);
-        List<StudentDto> dtoListByQueryWrapper = mybatisAccessorService.getDtoListByQueryWrapper(new StudentDto(), queryWrapper);
+        List<StudentDto> dtoListByQueryWrapper = mybatisAccessorService.getDtoListByQueryWrapper(StudentDto.class, queryWrapper);
         assert(dtoListByQueryWrapper.size() == 1);
         studentDto.setStudentId(dtoListByQueryWrapper.get(0).getStudentId());
         StudentDto dto = mybatisAccessorService.getDtoById(StudentDto.class, studentDto.getStudentId()
-                , false, Arrays.asList("scoreList", "courseList"));
+                , Arrays.asList("scoreList", "courseList"));
         assert(dto!= null);
         assert(dto.getName().equals(name));
         assert(dto.getScoreList().size() == 3);
@@ -94,7 +97,7 @@ public class Test03_UpdateManager {
         updateManager.submit();
 
         dto = mybatisAccessorService.getDtoById(StudentDto.class, studentDto.getStudentId()
-                , false, Arrays.asList("scoreList", "courseList"));
+                , Arrays.asList("scoreList", "courseList"));
         assert(dto != null);
         assert(dto.getName().equals(studentNamePrefix + "ABC"));
         assert(dto.getScoreList().size() == 3);

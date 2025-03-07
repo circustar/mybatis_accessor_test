@@ -58,10 +58,10 @@ public class Test04_UpdateEventExecutor5 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert((PersonInfo8Dto.class.getName() + "_" + IUpdateCommand.UpdateType.UPDATE.getName()).equals(executeUpdateBean2.getName()));
 
-        mybatisAccessorService.deleteByIds(PersonInfo8Dto.class, Collections.singleton(personInfo1_1.getPersonId()), true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo8Dto.class, Collections.singleton(personInfo1_1.getPersonId()),  null, false, null);
         assert((PersonInfo8Dto.class.getName() + "_" + IUpdateCommand.UpdateType.DELETE.getName()).equals(executeUpdateBean2.getName()));
 
     }
@@ -78,10 +78,10 @@ public class Test04_UpdateEventExecutor5 {
                 .point(point3_1).deleted(0)
                 .weight(weight3_1).teamCount(12).build();
         personInfo3_1.setCreateUser(6);
-        mybatisAccessorService.save(personInfo3_1, true, null, false, null);
+        mybatisAccessorService.save(personInfo3_1, null, false, null);
         assert((PersonInfo8Dto.class.getName() + "_" + IUpdateCommand.UpdateType.INSERT.getName()).equals(executeUpdateBean2.getName()));
 
-        mybatisAccessorService.deleteByIds(PersonInfo8Dto.class, Collections.singleton(personInfo3_1.getPersonId()), true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo8Dto.class, Collections.singleton(personInfo3_1.getPersonId()),  null, false, null);
         assert((PersonInfo8Dto.class.getName() + "_" + IUpdateCommand.UpdateType.DELETE.getName()).equals(executeUpdateBean2.getName()));
 
     }

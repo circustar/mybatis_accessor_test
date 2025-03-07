@@ -43,7 +43,7 @@ public class Test03_UpdateWithDeleteAndInsert {
         List<StudentDto6> dtoList = mybatisAccessorService.getDtoListByAnnotation(studentDto6);
         mybatisAccessorService.deleteByIds(StudentDto6.class
                 , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                , true, null, false, null);
+                , null, false, null);
 
         this.studentDto = DataSupport.createStudentData(mybatisAccessorService, studentName + "A1", 4, 3, courseNamePrefix);
     }
@@ -51,7 +51,7 @@ public class Test03_UpdateWithDeleteAndInsert {
     @Test
     @Rollback(false)
     public void TestDelete1() throws MybatisAccessorException {
-        StudentDto6 studentDto1 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
+        StudentDto6 studentDto1 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), null);
         assert(studentDto1 != null);
         assert(studentDto1.getCourseList().size() == 3);
         assert(studentDto1.getScoreList().size() == 4);
@@ -59,9 +59,9 @@ public class Test03_UpdateWithDeleteAndInsert {
         studentDto1.setScoreList(null);
         studentDto1.setCourseList(null);
         studentDto1.setName(studentName + "test");
-        mybatisAccessorService.saveOrUpdate(studentDto1, true, null, true, null);
+        mybatisAccessorService.saveOrUpdate(studentDto1, null, true, null);
 
-        StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
+        StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), null);
         assert(studentDto2 != null);
         assert(!(studentName + "test").equals(studentDto2.getName()));
         assert(studentDto2.getCourseList().size() == 0);
@@ -71,7 +71,7 @@ public class Test03_UpdateWithDeleteAndInsert {
     @Test
     @Rollback(false)
     public void TestDelete2() throws MybatisAccessorException {
-        StudentDto6 studentDto1 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
+        StudentDto6 studentDto1 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), null);
         assert(studentDto1 != null);
         assert(studentDto1.getCourseList().size() == 3);
         assert(studentDto1.getScoreList().size() == 4);
@@ -82,9 +82,9 @@ public class Test03_UpdateWithDeleteAndInsert {
         studentDto1.setScoreList(updateScoreList);
         studentDto1.setCourseList(updateCourseList);
         studentDto1.setName(studentName + "test");
-        mybatisAccessorService.saveOrUpdate(studentDto1, true, null, false, null);
+        mybatisAccessorService.saveOrUpdate(studentDto1, null, false, null);
 
-        StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), true, null);
+        StudentDto6 studentDto2 = mybatisAccessorService.getDtoById(StudentDto6.class, this.studentDto.getStudentId(), null);
         assert(studentDto2 != null);
         assert((studentName + "test").equals(studentDto2.getName()));
         assert(studentDto2.getCourseList().size() == 1);

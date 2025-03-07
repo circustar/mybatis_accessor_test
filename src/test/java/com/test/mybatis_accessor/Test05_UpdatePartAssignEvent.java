@@ -52,7 +52,7 @@ public class Test05_UpdatePartAssignEvent {
             return;
         }
         Set<Serializable> idList = dtoList.stream().map(x -> x.getPersonId()).collect(Collectors.toSet());
-        mybatisAccessorService.deleteByIds(PersonInfo9Dto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo9Dto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_name",testName);
@@ -83,7 +83,7 @@ public class Test05_UpdatePartAssignEvent {
         personInfo4_3.setCreateUser(3);
         personInfo4_1.setPersonInfoList(Arrays.asList(personInfo4_3, personInfo4_2));
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo4_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo4_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);
@@ -139,7 +139,7 @@ public class Test05_UpdatePartAssignEvent {
             personInfo4_3.setCreateUser(3);
             personInfo4_1.setPersonInfoList(Arrays.asList(personInfo4_3, personInfo4_2));
 
-            PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo4_1, true, null, false, null);
+            PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo4_1, null, false, null);
             assert(mainPersonInfo != null);
             assert(mainPersonInfo.getPersonId() != null);
             assert(mainPersonInfo.getLeaderId() == null);

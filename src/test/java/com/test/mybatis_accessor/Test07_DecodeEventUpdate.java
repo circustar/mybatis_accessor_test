@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,22 +38,22 @@ public class Test07_DecodeEventUpdate {
     @Test
     public void TestA1() throws MybatisAccessorException {
 
-        ProductDto productDto = mybatisAccessorService.getDtoById(ProductDto.class, 1, false, null);
+        ProductDto productDto = mybatisAccessorService.getDtoById(ProductDto.class, 1, Collections.emptyList());
         if(productDto == null) {
             productDto = ProductDto.builder().productId(1).productName("n1").build();
-            mybatisAccessorService.save(productDto,false, null, false, null);
+            mybatisAccessorService.save(productDto,Collections.emptyList(), false, null);
         }
 
-        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 2, false, null);
+        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 2, Collections.emptyList());
         if(productDto == null) {
             productDto = ProductDto.builder().productId(2).productName("n2").build();
-            mybatisAccessorService.save(productDto,false, null, false, null);
+            mybatisAccessorService.save(productDto,Collections.emptyList(), false, null);
         }
 
-        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 3, false, null);
+        productDto = mybatisAccessorService.getDtoById(ProductDto.class, 3, Collections.emptyList());
         if(productDto == null) {
             productDto = ProductDto.builder().productId(3).productName("n3").build();
-            mybatisAccessorService.save(productDto,false, null, false, null);
+            mybatisAccessorService.save(productDto, Collections.emptyList(), false, null);
         }
 
         String testName = namePrefix + "A1";
@@ -64,7 +65,6 @@ public class Test07_DecodeEventUpdate {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(ProductOrderDto3.class
                     , dtoList.stream().map(x -> x.getOrderId()).collect(Collectors.toSet())
-                    , true
                     , null, false, null);
 
             // 验证主项被删除
@@ -85,21 +85,21 @@ public class Test07_DecodeEventUpdate {
         productOrderDetailDto4.setCreateUser(createUser);
 
         orderDto.setOrderDetails(Arrays.asList(productOrderDetailDto1, productOrderDetailDto2, productOrderDetailDto3, productOrderDetailDto4));
-        ProductOrder productOrder = mybatisAccessorService.save(orderDto, true, null, false, null);
+        ProductOrder productOrder = mybatisAccessorService.save(orderDto, null, false, null);
 
-        ProductOrderDto po = mybatisAccessorService.getDtoById(ProductOrderDto.class, productOrder.getOrderId(), true ,null);
+        ProductOrderDto po = mybatisAccessorService.getDtoById(ProductOrderDto.class, productOrder.getOrderId(), null);
         assert(po!= null);
         assert(po.getOrderDetails().size() == 4);
 
-        ProductDto productDto1 = mybatisAccessorService.getDtoById(ProductDto.class, 1, false, null);
-        ProductDto productDto2 = mybatisAccessorService.getDtoById(ProductDto.class, 2, false, null);
-        ProductDto productDto3 = mybatisAccessorService.getDtoById(ProductDto.class, 3, false, null);
+        ProductDto productDto1 = mybatisAccessorService.getDtoById(ProductDto.class, 1, Collections.emptyList());
+        ProductDto productDto2 = mybatisAccessorService.getDtoById(ProductDto.class, 2, Collections.emptyList());
+        ProductDto productDto3 = mybatisAccessorService.getDtoById(ProductDto.class, 3, Collections.emptyList());
         assert(productDto3.getProductName().equals(executeUpdateBean.getProductName()));
 
-        ProductOrderDetail3Dto pd1 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto1.getOrderDetailId(), false, null);
-        ProductOrderDetail3Dto pd2 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto2.getOrderDetailId(), false, null);
-        ProductOrderDetail3Dto pd3 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto3.getOrderDetailId(), false, null);
-        ProductOrderDetail3Dto pd4 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto4.getOrderDetailId(), false, null);
+        ProductOrderDetail3Dto pd1 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto1.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail3Dto pd2 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto2.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail3Dto pd3 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto3.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail3Dto pd4 = mybatisAccessorService.getDtoById(ProductOrderDetail3Dto.class, productOrderDetailDto4.getOrderDetailId(), Collections.emptyList());
 
         assert(pd1.getProductName().equals(productDto1.getProductName()));
         assert(pd2.getProductName().equals(productDto2.getProductName()));
@@ -118,7 +118,6 @@ public class Test07_DecodeEventUpdate {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(ProductOrderDto4.class
                     , dtoList.stream().map(x -> x.getOrderId()).collect(Collectors.toSet())
-                    , true
                     , null, false, null);
 
             // 验证主项被删除
@@ -139,21 +138,21 @@ public class Test07_DecodeEventUpdate {
         productOrderDetailDto4.setCreateUser(createUser);
 
         orderDto.setOrderDetails(Arrays.asList(productOrderDetailDto1, productOrderDetailDto2, productOrderDetailDto3, productOrderDetailDto4));
-        ProductOrder productOrder = mybatisAccessorService.save(orderDto, true, null, false, null);
+        ProductOrder productOrder = mybatisAccessorService.save(orderDto, null, false, null);
 
-        ProductOrderDto po = mybatisAccessorService.getDtoById(ProductOrderDto.class, productOrder.getOrderId(), true ,null);
+        ProductOrderDto po = mybatisAccessorService.getDtoById(ProductOrderDto.class, productOrder.getOrderId(), null);
         assert(po!= null);
         assert(po.getOrderDetails().size() == 4);
 
-        ProductDto productDto1 = mybatisAccessorService.getDtoById(ProductDto.class, 1, false, null);
-        ProductDto productDto2 = mybatisAccessorService.getDtoById(ProductDto.class, 2, false, null);
-        ProductDto productDto3 = mybatisAccessorService.getDtoById(ProductDto.class, 3, false, null);
+        ProductDto productDto1 = mybatisAccessorService.getDtoById(ProductDto.class, 1, Collections.emptyList());
+        ProductDto productDto2 = mybatisAccessorService.getDtoById(ProductDto.class, 2, Collections.emptyList());
+        ProductDto productDto3 = mybatisAccessorService.getDtoById(ProductDto.class, 3, Collections.emptyList());
         assert(productDto3.getProductName().equals(executeUpdateBean.getProductName()));
 
-        ProductOrderDetail4Dto pd1 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto1.getOrderDetailId(), false, null);
-        ProductOrderDetail4Dto pd2 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto2.getOrderDetailId(), false, null);
-        ProductOrderDetail4Dto pd3 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto3.getOrderDetailId(), false, null);
-        ProductOrderDetail4Dto pd4 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto4.getOrderDetailId(), false, null);
+        ProductOrderDetail4Dto pd1 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto1.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail4Dto pd2 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto2.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail4Dto pd3 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto3.getOrderDetailId(), Collections.emptyList());
+        ProductOrderDetail4Dto pd4 = mybatisAccessorService.getDtoById(ProductOrderDetail4Dto.class, productOrderDetailDto4.getOrderDetailId(), Collections.emptyList());
 
         assert(pd1.getProductName().equals(productDto1.getProductName()));
         assert(pd2.getProductName().equals(productDto2.getProductName()));

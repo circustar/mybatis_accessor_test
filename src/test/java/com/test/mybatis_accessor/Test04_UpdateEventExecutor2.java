@@ -95,7 +95,7 @@ public class Test04_UpdateEventExecutor2 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        PersonInfo2 mainPersonInfo = mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        PersonInfo2 mainPersonInfo = mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);
@@ -170,7 +170,7 @@ public class Test04_UpdateEventExecutor2 {
         assert(Person2_1.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
         assert(Person2_2.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
 
-        PersonInfo2Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, Person1_1.get(0).getPersonId(), true, null);
+        PersonInfo2Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, Person1_1.get(0).getPersonId(), null);
         assert(dto1_1.getPersonInfoList().size() == 2);
         assert(dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonId().equals(Person2_1.get(0).getPersonId())
                 || x.getPersonId().equals(Person2_2.get(0).getPersonId())).count() == 2);
@@ -186,7 +186,7 @@ public class Test04_UpdateEventExecutor2 {
         qw.eq("person_info.person_name",testName + "1-1");
 
         List<PersonInfo2Dto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfo2Dto.class, qw);
-        PersonInfo2Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dtoList.get(0).getPersonId(), true, null);
+        PersonInfo2Dto dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dtoList.get(0).getPersonId(), null);
 
         dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-1")).forEach(x -> x.setDeleted(1));
         PersonInfo2Dto dto2_2 = dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-2")).findAny().get();
@@ -206,10 +206,10 @@ public class Test04_UpdateEventExecutor2 {
 
         dto1_1.getPersonInfoList().add(personInfo2_3);
 
-        PersonInfo2 mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, true, null, false, null);
+        PersonInfo2 mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, null, false, null);
         assert(mainPersonInfo != null);
 
-        dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dto1_1.getPersonId(), true, null);
+        dto1_1 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dto1_1.getPersonId(), null);
         BigDecimal maxDiffPoint = BigDecimal.valueOf(0.001f);
 
         BigDecimal totalPoint = dto1_1.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
@@ -220,7 +220,7 @@ public class Test04_UpdateEventExecutor2 {
         assert(dto1_1.getSharePoll().equals(totalSharePoll));
         assert(dto1_1.getTeamAveragePoint().subtract(totalPoint.divide(BigDecimal.valueOf(count))).compareTo(maxDiffPoint) < 0);
 
-        dto2_2 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dto2_2.getPersonId(), true, null);
+        dto2_2 = mybatisAccessorService.getDtoById(PersonInfo2Dto.class, dto2_2.getPersonId(), null);
         totalPoint = dto2_2.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
         totalSharePoll = dto2_2.getPersonInfoList().stream().map(x -> x.getSharePoll()).reduce((x, y) -> x.add(y)).get();
         count = dto2_2.getPersonInfoList().size();
@@ -243,7 +243,7 @@ public class Test04_UpdateEventExecutor2 {
         List<PersonInfo2Dto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfo2Dto.class, qw);
         Set<Serializable> idList = dtoList.stream().map(x -> x.getPersonId()).collect(Collectors.toSet());
         assert(idList.size() == 1);
-        mybatisAccessorService.deleteByIds(PersonInfo2Dto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo2Dto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_info.person_name",testName);

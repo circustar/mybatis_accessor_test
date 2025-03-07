@@ -69,7 +69,7 @@ public class Test02_GetList {
     public void TestGetDtoListByQueryWrapper() throws MybatisAccessorException {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.likeRight("name", studentName);
-        List<Object> entityListByQueryWrapper = mybatisAccessorService.getDtoListByQueryWrapper(new StudentDto(), queryWrapper);
+        List<Object> entityListByQueryWrapper = mybatisAccessorService.getDtoListByQueryWrapper(StudentDto.class, queryWrapper);
         log.info("--- log start ---");
         assert(entityListByQueryWrapper != null);
         assert(entityListByQueryWrapper.size() == 3);

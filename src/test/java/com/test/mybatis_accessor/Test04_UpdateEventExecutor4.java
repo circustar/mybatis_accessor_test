@@ -50,7 +50,6 @@ public class Test04_UpdateEventExecutor4 {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(ProductOrderDto2.class
                     , dtoList.stream().map(x -> x.getOrderId()).collect(Collectors.toSet())
-                    , true
                     , null, false, null);
 
             // 验证主项被删除
@@ -71,9 +70,9 @@ public class Test04_UpdateEventExecutor4 {
         productOrderDetailDto4.setCreateUser(createUser);
 
         orderDto.setOrderDetails(Arrays.asList(productOrderDetailDto1, productOrderDetailDto2, productOrderDetailDto3, productOrderDetailDto4));
-        ProductOrder productOrder = mybatisAccessorService.save(orderDto, true, null, false, null);
+        ProductOrder productOrder = mybatisAccessorService.save(orderDto, null, false, null);
 
-        ProductOrderDto2 po = mybatisAccessorService.getDtoById(ProductOrderDto2.class, productOrder.getOrderId(), true ,null);
+        ProductOrderDto2 po = mybatisAccessorService.getDtoById(ProductOrderDto2.class, productOrder.getOrderId(), null);
         assert(po!= null);
         assert(po.getOrderDetails().size() == 4);
         assert(amount.compareTo(po.getAmount()) == 0);
@@ -98,7 +97,7 @@ public class Test04_UpdateEventExecutor4 {
         dtoList = mybatisAccessorService.getDtoListByAnnotation(queryDto);
         assert(dtoList.size() > 0);
 
-        ProductOrderDto2 orderDto = mybatisAccessorService.getDtoById(ProductOrderDto2.class, dtoList.get(0).getOrderId(), true ,null);;
+        ProductOrderDto2 orderDto = mybatisAccessorService.getDtoById(ProductOrderDto2.class, dtoList.get(0).getOrderId(), null);;
         assert(orderDto.getOrderDetails().size() == 4);
 
         BigDecimal amount = BigDecimal.valueOf(234.56);
@@ -108,9 +107,9 @@ public class Test04_UpdateEventExecutor4 {
         orderDto.getOrderDetails().stream().filter(x -> x.getProductName().equals("n4")).forEach(x -> x.setDeleted(1));
         orderDto.getOrderDetails().stream().filter(x -> x.getProductName().equals("n1")).forEach(x -> x.setWeight(newWeight1));
         orderDto.setCreateUser(createUser);
-        mybatisAccessorService.saveOrUpdate(orderDto, true, null, false, null);
+        mybatisAccessorService.saveOrUpdate(orderDto, null, false, null);
 
-        ProductOrderDto2 po = mybatisAccessorService.getDtoById(ProductOrderDto2.class, orderDto.getOrderId(), true ,null);
+        ProductOrderDto2 po = mybatisAccessorService.getDtoById(ProductOrderDto2.class, orderDto.getOrderId(), null);
         assert(po!= null);
         assert(po.getOrderDetails().size() == 3);
         assert(amount.compareTo(po.getAmount()) == 0);

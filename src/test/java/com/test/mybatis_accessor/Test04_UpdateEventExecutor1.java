@@ -98,7 +98,7 @@ public class Test04_UpdateEventExecutor1 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);
@@ -173,7 +173,7 @@ public class Test04_UpdateEventExecutor1 {
         assert(Person2_1.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
         assert(Person2_2.get(0).getLeaderId().equals(Person1_1.get(0).getPersonId()));
 
-        PersonInfoDto dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, Person1_1.get(0).getPersonId(), true, null);
+        PersonInfoDto dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, Person1_1.get(0).getPersonId(), null);
         assert(dto1_1.getPersonInfoList().size() == 2);
         assert(dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonId().equals(Person2_1.get(0).getPersonId())
                 || x.getPersonId().equals(Person2_2.get(0).getPersonId())).count() == 2);
@@ -189,7 +189,7 @@ public class Test04_UpdateEventExecutor1 {
         qw.eq("person_name",testName + "1-1");
 
         List<PersonInfoDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfoDto.class, qw);
-        PersonInfoDto dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dtoList.get(0).getPersonId(), true, null);
+        PersonInfoDto dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dtoList.get(0).getPersonId(), null);
 
         dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-1")).forEach(x -> x.setDeleted(1));
         PersonInfoDto dto2_2 = dto1_1.getPersonInfoList().stream().filter(x -> x.getPersonName().equals(testName + "2-2")).findAny().get();
@@ -209,10 +209,10 @@ public class Test04_UpdateEventExecutor1 {
 
         dto1_1.getPersonInfoList().add(personInfo2_3);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.saveOrUpdate(dto1_1, null, false, null);
         assert(mainPersonInfo != null);
 
-        dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dto1_1.getPersonId(), true, null);
+        dto1_1 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dto1_1.getPersonId(), null);
         BigDecimal maxDiffPoint = BigDecimal.valueOf(0.001f);
 
         BigDecimal totalPoint = dto1_1.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
@@ -223,7 +223,7 @@ public class Test04_UpdateEventExecutor1 {
         assert(dto1_1.getSharePoll().equals(totalSharePoll));
         assert(dto1_1.getTeamAveragePoint().subtract(totalPoint.divide(BigDecimal.valueOf(count))).compareTo(maxDiffPoint) < 0);
 
-        dto2_2 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dto2_2.getPersonId(), true, null);
+        dto2_2 = mybatisAccessorService.getDtoById(PersonInfoDto.class, dto2_2.getPersonId(), null);
         totalPoint = dto2_2.getPersonInfoList().stream().map(x -> x.getPoint()).reduce((x, y) -> x.add(y)).get();
         totalSharePoll = dto2_2.getPersonInfoList().stream().map(x -> x.getSharePoll()).reduce((x, y) -> x.add(y)).get();
         count = dto2_2.getPersonInfoList().size();
@@ -246,7 +246,7 @@ public class Test04_UpdateEventExecutor1 {
         List<PersonInfoDto> dtoList = mybatisAccessorService.getDtoListByQueryWrapper(PersonInfoDto.class, qw);
         Set<Serializable> idList = dtoList.stream().map(x -> x.getPersonId()).collect(Collectors.toSet());
         assert(idList.size() == 1);
-        mybatisAccessorService.deleteByIds(PersonInfoDto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfoDto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_name",testName);

@@ -62,7 +62,7 @@ public class TestController {
     public Object testGetById(@PathVariable("dto_name") String dto_name
             , @PathVariable("id") String id
             , @RequestParam(value = "sub_entities", required = false) String[] sub_entities) throws MybatisAccessorException {
-        return mybatisAccessorService.getDtoById(dto_name , id, false, Arrays.asList(sub_entities));
+        return mybatisAccessorService.getDtoById(dto_name , id, Arrays.asList(sub_entities));
     }
 
     /*
@@ -88,11 +88,10 @@ public class TestController {
      */
     @DeleteMapping("/entity/{dto_name}/{id}")
     public Object testDeleteById(@PathVariable("dto_name") String dto_name
-            , @RequestParam(value = "include_all_children", required = false) Boolean includeAllChildren
             , @RequestParam(value = "children", required = false) String[] children
             , @PathVariable("id") String id
             , @RequestParam(value = "update_children_only", required = false) Boolean updateChildrenOnly) throws MybatisAccessorException {
-        return mybatisAccessorService.deleteByIds(dto_name,Collections.singleton(id), includeAllChildren, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
+        return mybatisAccessorService.deleteByIds(dto_name,Collections.singleton(id), Arrays.asList(children), getBoolean(updateChildrenOnly), null);
     }
 
     /*
@@ -101,11 +100,10 @@ public class TestController {
      */
     @DeleteMapping("/entities/{dto_name}")
     public Object testDeleteByIds(@PathVariable("dto_name") String dto_name
-            , @RequestParam(value = "include_all_children", required = false) Boolean includeAllChildren
             , @RequestParam(value = "children", required = false) String[] children
             , @RequestBody Set<Serializable> ids
             , @RequestParam(value = "update_children_only", required = false) Boolean updateChildrenOnly) throws MybatisAccessorException {
-        return mybatisAccessorService.deleteByIds(dto_name, ids, includeAllChildren, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
+        return mybatisAccessorService.deleteByIds(dto_name, ids, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
     }
 
     /*
@@ -118,7 +116,7 @@ public class TestController {
             , @RequestParam(value = "update_children_only", required = false) Boolean updateChildrenOnly) throws MybatisAccessorException {
         EntityDtoServiceRelation relation = mybatisAccessorService.getRelation(null, dto_name);
         Object object = convertFromMap(map, relation.getDtoClass());
-        return mybatisAccessorService.save(object, false, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
+        return mybatisAccessorService.save(object, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
     }
 
     /*
@@ -132,7 +130,7 @@ public class TestController {
         EntityDtoServiceRelation relation = mybatisAccessorService.getRelation(null, dto_name);
         List object = (List) convertFromMap(mapList, relation.getDtoClass());
 
-        return mybatisAccessorService.saveList(object, false, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
+        return mybatisAccessorService.saveList(object, Arrays.asList(children), getBoolean(updateChildrenOnly), null);
     }
 
     /*
@@ -148,7 +146,7 @@ public class TestController {
         EntityDtoServiceRelation relation = mybatisAccessorService.getRelation(null, dto_name);
         Object object = convertFromMap(map, relation.getDtoClass());
 
-        return mybatisAccessorService.update(object, false, Arrays.asList(children)
+        return mybatisAccessorService.update(object, Arrays.asList(children)
                 , getBoolean(updateChildrenOnly), null);
     }
 
@@ -166,7 +164,7 @@ public class TestController {
         EntityDtoServiceRelation relation = mybatisAccessorService.getRelation(null, dto_name);
         List object = (List) convertFromMap(mapList, relation.getDtoClass());
 
-        return mybatisAccessorService.updateList(object, false, Arrays.asList(children)
+        return mybatisAccessorService.updateList(object, Arrays.asList(children)
                 , getBoolean(updateChildrenOnly), null);
     }
 

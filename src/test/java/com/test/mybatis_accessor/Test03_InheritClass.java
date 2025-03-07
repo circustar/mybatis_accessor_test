@@ -45,13 +45,13 @@ public class Test03_InheritClass {
         List<ClassGroup> classGroups = mybatisAccessorService.getEntityListByAnnotation(query);
         if(classGroups != null && classGroups.size() > 0) {
             Set<Serializable> collect = classGroups.stream().map(x -> (Serializable) x.getClassGroupId()).collect(Collectors.toSet());
-            mybatisAccessorService.deleteByIds(ClassGroupDto.class, collect, false, null, false, null);
+            mybatisAccessorService.deleteByIds(ClassGroupDto.class, collect, Collections.emptyList(), false, null);
         }
         ClassGroupDto classGroupDto = new ClassGroupDto();
         classGroupDto.setGroupName(name);
         classGroupDto.setCreateUser(1);
         classGroupDto.setUpdateUser(2);
-        mybatisAccessorService.save(classGroupDto, false, null, false, null);
+        mybatisAccessorService.save(classGroupDto, Collections.emptyList(), false, null);
         this.classGroupDto = classGroupDto;
     }
 
@@ -77,7 +77,7 @@ public class Test03_InheritClass {
         classGroupDto.setGroupName(name);
         ;
         ClassGroupDto entity = (ClassGroupDto) mybatisAccessorService.getDtoByAnnotation(classGroupDto
-                , false, null);
+                , Collections.emptyList());
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -99,14 +99,14 @@ public class Test03_InheritClass {
 
         ClassGroupDto query = ClassGroupDto.builder().groupName(name).build();
         ClassGroupDto entity = mybatisAccessorService.getDtoByAnnotation(query
-                , false, null);
+                , Collections.emptyList());
         if(entity != null) {
             mybatisAccessorService.deleteByIds(ClassGroupDto.class
-                    , Collections.singleton(entity.getClassGroupId()), false, null, false, null);
+                    , Collections.singleton(entity.getClassGroupId()), Collections.emptyList(), false, null);
         }
-        mybatisAccessorService.save(classGroupDto, false, null, false, null);
+        mybatisAccessorService.save(classGroupDto, Collections.emptyList(), false, null);
         entity = mybatisAccessorService.getDtoByAnnotation(query
-                , false, null);
+                , Collections.emptyList());
         log.info("--- log start ---");
         log.info(entity.toString());
         log.info(entity.getCreateTime().toString());

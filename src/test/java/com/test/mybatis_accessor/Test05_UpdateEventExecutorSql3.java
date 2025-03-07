@@ -46,7 +46,7 @@ public class Test05_UpdateEventExecutorSql3 {
             return;
         }
         Set<Serializable> idList = dtoList.stream().map(x -> x.getPersonId()).collect(Collectors.toSet());
-        mybatisAccessorService.deleteByIds(PersonInfo7Dto.class, idList, true, null, false, null);
+        mybatisAccessorService.deleteByIds(PersonInfo7Dto.class, idList, null, false, null);
 
         QueryWrapper qw2 = new QueryWrapper<>();
         qw2.likeRight("person_name",testName);
@@ -115,7 +115,7 @@ public class Test05_UpdateEventExecutorSql3 {
         personInfo1_1.setPersonInfoList(Arrays.asList(personInfo2_1, personInfo2_2));
         personInfo1_1.setCreateUser(8);
 
-        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, true, null, false, null);
+        PersonInfo mainPersonInfo = mybatisAccessorService.save(personInfo1_1, null, false, null);
         assert(mainPersonInfo != null);
         assert(mainPersonInfo.getPersonId() != null);
         assert(mainPersonInfo.getLeaderId() == null);

@@ -57,11 +57,11 @@ public class DataSupport {
         }
 
         // 插入数据
-        Student updateResult = mybatisAccessorService.save(studentDto, false
+        Student updateResult = mybatisAccessorService.save(studentDto
                 , Arrays.asList("scoreList","courseList"), false, null);
         assert(updateResult != null);
 
-        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto, false
+        StudentDto result = mybatisAccessorService.getDtoByAnnotation(queryDto
                 , Arrays.asList("scoreList","courseList"));
 
         // 验证主项被插入
@@ -87,7 +87,6 @@ public class DataSupport {
             // 删除主项以及子项
             mybatisAccessorService.deleteByIds(StudentDto.class
                     , dtoList.stream().map(x -> x.getStudentId()).collect(Collectors.toSet())
-                    , false
                     , Arrays.asList("scoreList","courseList"), false, null);
 
             // 验证主项被删除

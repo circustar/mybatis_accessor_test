@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -62,7 +63,7 @@ public class Test02_GetOne {
     @Test
     public void TestGetDtoById() throws MybatisAccessorException {
         StudentDto entity = (StudentDto) mybatisAccessorService.getDtoById(StudentDto.class, studentDto.getStudentId()
-                , false, Arrays.asList("scoreList"));
+                , Arrays.asList("scoreList"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -74,7 +75,7 @@ public class Test02_GetOne {
     @Test
     public void TestGetDtoById2() throws MybatisAccessorException {
         StudentDto2 entity = (StudentDto2) mybatisAccessorService.getDtoById(StudentDto2.class, studentDto.getStudentId()
-                , false, Arrays.asList("scoreList"));
+                , Arrays.asList("scoreList"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -95,7 +96,7 @@ public class Test02_GetOne {
     @Test
     public void TestGetDtoById3() throws MybatisAccessorException {
         StudentDto3 entity = (StudentDto3) mybatisAccessorService.getDtoById(StudentDto3.class, studentDto.getStudentId()
-                , false, null);
+                , Collections.emptyList());
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -106,7 +107,7 @@ public class Test02_GetOne {
     @Test
     public void TestGetDtoById4() throws MybatisAccessorException {
         StudentDto3 entity = (StudentDto3) mybatisAccessorService.getDtoById(StudentDto3.class
-                , studentDto.getStudentId(), true, null);
+                , studentDto.getStudentId(), null);
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -143,7 +144,7 @@ public class Test02_GetOne {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("student_id", studentDto.getStudentId());
         StudentDto entity = (StudentDto) mybatisAccessorService.getDtoByQueryWrapper(new StudentDto(), queryWrapper
-                , false, Arrays.asList("scoreList"));
+                , Arrays.asList("scoreList"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -157,7 +158,7 @@ public class Test02_GetOne {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("student_id", studentDto.getStudentId());
         StudentDto2 entity = (StudentDto2) mybatisAccessorService.getDtoByQueryWrapper(new StudentDto2(), queryWrapper
-                ,false, Arrays.asList("scoreList"));
+                , Arrays.asList("scoreList"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -172,7 +173,7 @@ public class Test02_GetOne {
         studentQueryDto.setGrade_from(0);
         studentQueryDto.setGrade_to(100);
         StudentQueryDto entity = (StudentQueryDto) mybatisAccessorService.getDtoByAnnotation(studentQueryDto
-                , false, Arrays.asList("scoreList"));
+                , Arrays.asList("scoreList"));
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -187,7 +188,7 @@ public class Test02_GetOne {
         studentQueryDto.setGrade_from(0);
         studentQueryDto.setGrade_to(100);
         StudentQueryDto entity = (StudentQueryDto) mybatisAccessorService.getDtoByAnnotation(studentQueryDto
-                , true, null);
+                , null);
         log.info("--- log start ---");
         log.info(entity.toString());
         assert(entity != null);
@@ -201,7 +202,7 @@ public class Test02_GetOne {
         StudentDto3 studentDto = new StudentDto3();
         studentDto.setName(this.studentDto.getName());
         StudentDto3 entity =  mybatisAccessorService.getDtoByAnnotation(studentDto
-                , true, null);
+                , null);
         log.info("--- log start ---");
         assert(entity != null);
         assert(entity.getScoreList() != null && entity.getScoreList().size() > 0);
